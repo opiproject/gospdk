@@ -28,7 +28,7 @@ var (
 
 // JSONRPC represents an interface to execute JSON RPC to SPDK
 type JSONRPC interface {
-	GetId() uint64
+	GetID() uint64
 	StartUnixListener() net.Listener
 	Call(method string, args, result interface{}) error
 }
@@ -58,8 +58,8 @@ func NewSpdkJSONRPC(socketPath string) JSONRPC {
 	}
 }
 
-// GetId implements low level rpc request/response handling
-func (r *SpdkJSONRPC) GetId() uint64 {
+// GetID implements low level rpc request/response handling
+func (r *SpdkJSONRPC) GetID() uint64 {
 	return r.id
 }
 
