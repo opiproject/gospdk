@@ -25,6 +25,6 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to get SPDK version: %v", err)
 	}
-	
+
 	log.Printf("Received from SPDK: %v", ver)
 }

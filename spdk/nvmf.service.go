@@ -9,8 +9,8 @@ type NvmfService interface {
 	DeleteSubsystem(*NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error)
 	GetSubsystems(page int, limit int) (*NvmfGetSubsystemsResult, error)
 	GetStats(page int, limit int) (*NvmfGetSubsystemStatsResult, error)
- 	AddListener(*NvmfSubsystemAddListenerParams) (*NvmfSubsystemAddListenerResult, error)
- 	RemoveListener(*NvmfSubsystemAddListenerParams) (*NvmfSubsystemAddListenerResult, error)
- 	AddNamespace(*NvmfSubsystemAddNsParams) (*NvmfSubsystemAddNsResult, error)
- 	RemoveNamespace(*NvmfSubsystemRemoveNsParams) (*NvmfSubsystemRemoveNsResult, error)
+	AddListener(*NvmfSubsystemAddListenerParams) (*NvmfSubsystemAddListenerResult, error)
+	RemoveListener(*NvmfSubsystemAddListenerParams) (*NvmfSubsystemAddListenerResult, error)
+	AddNamespace(*NvmfSubsystemAddNsParams) (*NvmfSubsystemAddNsResult, error)
+	RemoveNamespace(*NvmfSubsystemRemoveNsParams) (*NvmfSubsystemRemoveNsResult, error)
 }

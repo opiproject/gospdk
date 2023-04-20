@@ -12,6 +12,7 @@ import (
 	"io"
 	"log"
 	"net"
+	"os"
 	"sync/atomic"
 
 	"google.golang.org/grpc/codes"
@@ -27,6 +28,8 @@ var (
 
 // JSONRPC represents an interface to execute JSON RPC to SPDK
 type JSONRPC interface {
+	GetId() uint64
+	StartUnixListener() net.Listener
 	Call(method string, args, result interface{}) error
 }
 
@@ -53,6 +56,23 @@ func NewSpdkJSONRPC(socketPath string) JSONRPC {
 		socket:    socketPath,
 		id:        0,
 	}
+}
+
+// GetId implements low level rpc request/response handling
+func (r *SpdkJSONRPC) GetId() uint64 {
+	return r.id
+}
+
+// StartUnixListener is utility function used to create new listener in tests
+func (r *SpdkJSONRPC) StartUnixListener() net.Listener {
+	if err := os.RemoveAll(r.socket); err != nil {
+		log.Fatal(err)
+	}
+	ln, err := net.Listen("unix", r.socket)
+	if err != nil {
+		log.Fatal("listen error:", err)
+	}
+	return ln
 }
 
 // Call implements low level rpc request/response handling
