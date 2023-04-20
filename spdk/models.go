@@ -4,7 +4,7 @@
 // Package spdk implements the spdk json-rpc protocol
 package spdk
 
-// AccelCryptoKeyCreateParams holds the parameters required to create an AIO Block Device
+// AccelCryptoKeyCreateParams holds the parameters required to create a Crypto Key
 type AccelCryptoKeyCreateParams struct {
 	Cipher string `json:"cipher"`
 	Key    string `json:"key"`
@@ -12,16 +12,29 @@ type AccelCryptoKeyCreateParams struct {
 	Name   string `json:"name"`
 }
 
-// AccelCryptoKeyCreateResult is the result of deleting an AIO Block Device
+// AccelCryptoKeyCreateResult is the result of creating a Crypto Key
 type AccelCryptoKeyCreateResult bool
 
-// AccelCryptoKeyDestroyParams holds the parameters required to create an AIO Block Device
+// AccelCryptoKeyDestroyParams holds the parameters required to delete a Crypto Key
 type AccelCryptoKeyDestroyParams struct {
 	KeyName string `json:"key_name"`
 }
 
-// AccelCryptoKeyDestroyResult is the result of deleting an AIO Block Device
+// AccelCryptoKeyDestroyResult is the result of deleting a Crypto Key
 type AccelCryptoKeyDestroyResult bool
+
+// AccelCryptoKeyGetParams holds the parameters required to get a Crypto Key
+type AccelCryptoKeyGetParams struct {
+	KeyName string `json:"key_name"`
+}
+
+// AccelCryptoKeyGetResult is the result of getting a Crypto Key
+type AccelCryptoKeyGetResult struct {
+	Name   string `json:"name"`
+	Cipher string `json:"cipher"`
+	Key    string `json:"key"`
+	Key2   string `json:"key2"`
+}
 
 // GetVersionResult is the result of getting a version
 type GetVersionResult struct {
