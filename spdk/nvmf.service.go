@@ -13,5 +13,4 @@ type NvmfService interface {
  	RemoveListener(*NvmfSubsystemAddListenerParams) (*NvmfSubsystemAddListenerResult, error)
  	AddNamespace(*NvmfSubsystemAddNsParams) (*NvmfSubsystemAddNsResult, error)
  	RemoveNamespace(*NvmfSubsystemRemoveNsParams) (*NvmfSubsystemRemoveNsResult, error)
-
 }
