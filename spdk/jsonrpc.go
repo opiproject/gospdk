@@ -30,7 +30,7 @@ type JSONRPC interface {
 	Call(method string, args, result interface{}) error
 }
 
-type spdkJSONRPC struct {
+type SpdkJSONRPC struct {
 	transport string
 	socket    string
 	id        uint64
@@ -48,7 +48,7 @@ func NewSpdkJSONRPC(socketPath string) JSONRPC {
 		protocol = "unix"
 	}
 	log.Printf("Connection to SPDK will be via: %s detected from %s", protocol, socketPath)
-	return &spdkJSONRPC{
+	return &SpdkJSONRPC{
 		transport: protocol,
 		socket:    socketPath,
 		id:        0,
@@ -56,7 +56,7 @@ func NewSpdkJSONRPC(socketPath string) JSONRPC {
 }
 
 // Call implements low level rpc request/response handling
-func (r *spdkJSONRPC) Call(method string, args, result interface{}) error {
+func (r *SpdkJSONRPC) Call(method string, args, result interface{}) error {
 	id := atomic.AddUint64(&r.id, 1)
 	request := RPCRequest{
 		RPCVersion: JSONRPCVersion,
@@ -93,7 +93,7 @@ func (r *spdkJSONRPC) Call(method string, args, result interface{}) error {
 	return nil
 }
 
-func (r *spdkJSONRPC) communicate(buf []byte) (io.Reader, error) {
+func (r *SpdkJSONRPC) communicate(buf []byte) (io.Reader, error) {
 	// connect
 	conn, err := net.Dial(r.transport, r.socket)
 	if err != nil {
