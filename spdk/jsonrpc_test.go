@@ -47,7 +47,7 @@ func TestSpdk_NewSpdkJSONRPC(t *testing.T) {
 				}
 			}()
 			before := NewSpdkJSONRPC(tt.address)
-			after := &spdkJSONRPC{
+			after := &SpdkJSONRPC{
 				transport: tt.transport,
 				socket:    tt.address,
 				id:        0,
