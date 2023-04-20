@@ -194,6 +194,18 @@ type BdevGetIostatResult struct {
 	} `json:"bdevs"`
 }
 
+// BdevQoSParams holds the parameters required to set QoS on a Block Device
+type BdevQoSParams struct {
+	Name           string `json:"name"`
+	RwIosPerSec    int    `json:"rw_ios_per_sec"`
+	RwMbytesPerSec int    `json:"rw_mbytes_per_sec"`
+	RMbytesPerSec  int    `json:"r_mbytes_per_sec"`
+	WMbytesPerSec  int    `json:"w_mbytes_per_sec"`
+}
+
+// BdevQoSResult is the result of setting QoS on a Block Device
+type BdevQoSResult bool
+
 // VhostCreateBlkControllerParams holds the parameters required to create a block device
 // from a vhost controller
 type VhostCreateBlkControllerParams struct {
