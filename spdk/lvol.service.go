@@ -11,7 +11,7 @@ type LvolService interface {
 	RenameLvstore(*NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error)
 	GrowLvstore(*NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error)
 
- 	CreateLvol(*NvmfCreateSubsystemParams) (*NvmfCreateSubsystemResult, error)
+	CreateLvol(*NvmfCreateSubsystemParams) (*NvmfCreateSubsystemResult, error)
 	SnapshotLvol(*NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error)
 	CloneLvol(*NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error)
 	RenameLvol(*NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error)
