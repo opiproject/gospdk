@@ -29,6 +29,7 @@ var (
 // JSONRPC represents an interface to execute JSON RPC to SPDK
 type JSONRPC interface {
 	GetID() uint64
+	GetVersion() string
 	StartUnixListener() net.Listener
 	Call(method string, args, result interface{}) error
 }
@@ -61,6 +62,19 @@ func NewSpdkJSONRPC(socketPath string) JSONRPC {
 // GetID implements low level rpc request/response handling
 func (r *SpdkJSONRPC) GetID() uint64 {
 	return r.id
+}
+
+// GetVersion implements low level rpc request/response handling
+func (r *SpdkJSONRPC) GetVersion() string {
+	var ver GetVersionResult
+	err := r.Call("spdk_get_version", nil, &ver)
+	if err != nil {
+		msg := fmt.Sprintf("Could not get spdk version: %v", err)
+		log.Print(msg)
+		return ""
+	}
+	log.Printf("Received from SPDK: %v", ver)
+	return ver.Version
 }
 
 // StartUnixListener is utility function used to create new listener in tests

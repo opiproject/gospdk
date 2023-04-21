@@ -18,8 +18,12 @@ func main() {
 	flag.StringVar(&spdkAddress, "spdk_addr", "/var/tmp/spdk.sock", "Points to SPDK unix socket/tcp socket to interact with")
 	flag.Parse()
 
+	// use like this:
 	jsonRPC := spdk.NewSpdkJSONRPC(spdkAddress)
+	version := jsonRPC.GetVersion()
+	log.Printf("Received from SPDK: %v", version)
 
+	// or like this:
 	var ver spdk.GetVersionResult
 	err := jsonRPC.Call("spdk_get_version", nil, &ver)
 	if err != nil {
