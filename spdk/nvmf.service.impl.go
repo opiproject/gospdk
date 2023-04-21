@@ -6,18 +6,41 @@ package spdk
 
 import (
 	"context"
+	"fmt"
+	"log"
 )
 
 type NvmfServiceImpl struct {
-	ctx context.Context
+	ctx    context.Context
+	client JSONRPC
 }
 
 func NewNvmfService(ctx context.Context) NvmfService {
-	return &NvmfServiceImpl{ctx}
+	// client := spdk.NewSpdkJSONRPC(spdkAddress)
+	return &NvmfServiceImpl{ctx, nil}
 }
 
-func (p *NvmfServiceImpl) CreateSubsystem(params *NvmfCreateSubsystemParams) (*NvmfCreateSubsystemResult, error) {
+func (p *NvmfServiceImpl) CreateSubsystem(nqn string, serial string, model string, ns int) (*NvmfCreateSubsystemResult, error) {
 	// TBD
+	params := NvmfCreateSubsystemParams{
+		Nqn:           nqn,
+		SerialNumber:  serial,
+		ModelNumber:   model,
+		AllowAnyHost:  true,
+		MaxNamespaces: ns,
+	}
+	var result NvmfCreateSubsystemResult
+	err := p.client.Call("nvmf_create_subsystem", &params, &result)
+	if err != nil {
+		log.Printf("error: %v", err)
+		return nil, err
+	}
+	log.Printf("Received from SPDK: %v", result)
+	if !result {
+		msg := fmt.Sprintf("Could not create NQN: %s", nqn)
+		log.Print(msg)
+		return nil, ErrUnexpectedSpdkCallResult
+	}
 	return nil, nil
 }
 

@@ -5,7 +5,7 @@
 package spdk
 
 type NvmfService interface {
-	CreateSubsystem(*NvmfCreateSubsystemParams) (*NvmfCreateSubsystemResult, error)
+	CreateSubsystem(nqn string, serial string, model string, ns int) (*NvmfCreateSubsystemResult, error)
 	DeleteSubsystem(*NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error)
 	GetSubsystems(page int, limit int) (*NvmfGetSubsystemsResult, error)
 	GetStats(page int, limit int) (*NvmfGetSubsystemStatsResult, error)
