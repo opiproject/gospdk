@@ -5,7 +5,7 @@
 package spdk
 
 type AccelService interface {
-	CryptoKeyCreate(*AccelCryptoKeyCreateParams) (*AccelCryptoKeyCreateResult, error)
+	CryptoKeyCreate(name string, cipher string, key []byte) (*AccelCryptoKeyCreateResult, error)
 	CryptoKeyDestroy(*AccelCryptoKeyDestroyParams) (*AccelCryptoKeyDestroyResult, error)
 	CryptoKeyList(*AccelCryptoKeyGetParams) (*AccelCryptoKeyGetResult, error)
 	GetStats(*NvmfCreateSubsystemParams) (*NvmfCreateSubsystemResult, error)
