@@ -132,6 +132,7 @@ type BdevNvmeAttachControllerParams struct {
 	Subnqn  string `json:"subnqn"`
 	Hdgst   bool   `json:"hdgst"`
 	Ddgst   bool   `json:"ddgst"`
+	Psk     string `json:"psk,omitempty"`
 }
 
 // BdevNvmeAttachControllerResult is the result of creating a block device based on an NVMe device
@@ -343,6 +344,7 @@ type NvmfGetSubsystemStatsResult struct {
 // NvmfSubsystemAddListenerParams holds the parameters required to Delete a NVMf subsystem
 type NvmfSubsystemAddListenerParams struct {
 	Nqn           string `json:"nqn"`
+	SecureChannel bool   `json:"secure_channel,omitempty"`
 	ListenAddress struct {
 		Trtype  string `json:"trtype"`
 		Traddr  string `json:"traddr"`
