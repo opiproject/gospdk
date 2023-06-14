@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright (c) 2022-2023 Dell Inc, or its subsidiaries.
+// Copyright (C) 2023 Intel Corporation
 
 // Package spdk implements the spdk json-rpc protocol
 package spdk
@@ -123,16 +124,17 @@ type BdevCryptoDeleteResult bool
 
 // BdevNvmeAttachControllerParams is the parameters required to create a block device based on an NVMe device
 type BdevNvmeAttachControllerParams struct {
-	Name    string `json:"name"`
-	Trtype  string `json:"trtype"`
-	Traddr  string `json:"traddr"`
-	Hostnqn string `json:"hostnqn"`
-	Adrfam  string `json:"adrfam"`
-	Trsvcid string `json:"trsvcid"`
-	Subnqn  string `json:"subnqn"`
-	Hdgst   bool   `json:"hdgst"`
-	Ddgst   bool   `json:"ddgst"`
-	Psk     string `json:"psk,omitempty"`
+	Name      string `json:"name"`
+	Trtype    string `json:"trtype"`
+	Traddr    string `json:"traddr"`
+	Hostnqn   string `json:"hostnqn"`
+	Adrfam    string `json:"adrfam"`
+	Trsvcid   string `json:"trsvcid"`
+	Subnqn    string `json:"subnqn"`
+	Hdgst     bool   `json:"hdgst"`
+	Ddgst     bool   `json:"ddgst"`
+	Psk       string `json:"psk,omitempty"`
+	Multipath string `json:"multipath,omitempty"`
 }
 
 // BdevNvmeAttachControllerResult is the result of creating a block device based on an NVMe device
@@ -140,7 +142,12 @@ type BdevNvmeAttachControllerResult string
 
 // BdevNvmeDetachControllerParams is the parameters required to detach a block device based on an NVMe device
 type BdevNvmeDetachControllerParams struct {
-	Name string `json:"name"`
+	Name    string `json:"name"`
+	Trtype  string `json:"trtype"`
+	Traddr  string `json:"traddr"`
+	Adrfam  string `json:"adrfam"`
+	Trsvcid string `json:"trsvcid"`
+	Subnqn  string `json:"subnqn"`
 }
 
 // BdevNvmeDetachControllerResult is the result of detaching a block device based on an NVMe device
