@@ -362,3 +362,14 @@ type NvmfSubsystemAddListenerParams struct {
 
 // NvmfSubsystemAddListenerResult is the result of creating a NVMf subsystem
 type NvmfSubsystemAddListenerResult bool
+
+// NvmfSubsystemAddHostParams holds the parameters required to add a host to NVMf subsystem
+type NvmfSubsystemAddHostParams struct {
+	Nqn           string `json:"nqn"`
+	Host          string `json:"host"`
+	TgtName       string `json:"tgt_name,omitempty"`
+	Psk           string `json:"psk,omitempty"`
+}
+
+// NvmfSubsystemAddHostResult is the result of adding host to NVMf subsystem
+type NvmfSubsystemAddHostResult bool
