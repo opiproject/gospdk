@@ -127,12 +127,12 @@ type BdevNvmeAttachControllerParams struct {
 	Name      string `json:"name"`
 	Trtype    string `json:"trtype"`
 	Traddr    string `json:"traddr"`
-	Hostnqn   string `json:"hostnqn"`
-	Adrfam    string `json:"adrfam"`
-	Trsvcid   string `json:"trsvcid"`
-	Subnqn    string `json:"subnqn"`
-	Hdgst     bool   `json:"hdgst"`
-	Ddgst     bool   `json:"ddgst"`
+	Hostnqn   string `json:"hostnqn,omitempty"`
+	Adrfam    string `json:"adrfam,omitempty"`
+	Trsvcid   string `json:"trsvcid,omitempty"`
+	Subnqn    string `json:"subnqn,omitempty"`
+	Hdgst     bool   `json:"hdgst,omitempty"`
+	Ddgst     bool   `json:"ddgst,omitempty"`
 	Psk       string `json:"psk,omitempty"`
 	Multipath string `json:"multipath,omitempty"`
 }
@@ -145,9 +145,9 @@ type BdevNvmeDetachControllerParams struct {
 	Name    string `json:"name"`
 	Trtype  string `json:"trtype"`
 	Traddr  string `json:"traddr"`
-	Adrfam  string `json:"adrfam"`
-	Trsvcid string `json:"trsvcid"`
-	Subnqn  string `json:"subnqn"`
+	Adrfam  string `json:"adrfam,omitempty"`
+	Trsvcid string `json:"trsvcid,omitempty"`
+	Subnqn  string `json:"subnqn,omitempty"`
 }
 
 // BdevNvmeDetachControllerResult is the result of detaching a block device based on an NVMe device
