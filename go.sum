@@ -5,6 +5,8 @@ github.com/google/go-cmp v0.5.5/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/
 github.com/google/go-cmp v0.5.9 h1:O2Tfq5qg4qc4AmwVlvv0oLiVAGB7enBSJ2x2DqQFi38=
 github.com/spdk/spdk v1.2.1-0.20211221161437-2af48ebf5847 h1:i/AxQS5uD4O6fsnFImS2N2sN16NrmPluIuqaZaoTU2Y=
 github.com/spdk/spdk v1.2.1-0.20211221161437-2af48ebf5847/go.mod h1:wDdaHSpvePPObXYUQ6taslF7uN/zyR+W782ddejDQEU=
+github.com/spdk/spdk/go/rpc v0.0.0-20230922130700-a3a123908e4b h1:5finS2gTrRSk0MzswcyTetyXci/Jki7mYd6xYbCZQw8=
+github.com/spdk/spdk/go/rpc v0.0.0-20230922130700-a3a123908e4b/go.mod h1:rpOwUxkcLJ5j1SB80YgfM6277k9RDRxvBMQomeho0EE=
 golang.org/x/net v0.8.0 h1:Zrh2ngAOFYneWTAIAPethzeaQLuHwhuBkuV6ZiRnUaQ=
 golang.org/x/sync v0.0.0-20190423024810-112230192c58/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
 golang.org/x/sys v0.6.0 h1:MVltZSvRTcU2ljQOhs94SXPftV6DCNnZViHeQps87pQ=
