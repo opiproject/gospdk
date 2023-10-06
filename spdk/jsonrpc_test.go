@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-func TestSpdk_NewSpdkJSONRPC(t *testing.T) {
+func TestSpdk_NewClient(t *testing.T) {
 	tests := map[string]struct {
 		address   string
 		transport string
@@ -43,11 +43,11 @@ func TestSpdk_NewSpdkJSONRPC(t *testing.T) {
 			defer func() {
 				r := recover()
 				if (r != nil) != tt.wantPanic {
-					t.Errorf("NewSpdkJSONRPC() recover = %v, wantPanic = %v", r, tt.wantPanic)
+					t.Errorf("NewClient() recover = %v, wantPanic = %v", r, tt.wantPanic)
 				}
 			}()
-			before := NewSpdkJSONRPC(tt.address)
-			after := &SpdkJSONRPC{
+			before := NewClient(tt.address)
+			after := &Client{
 				transport: tt.transport,
 				socket:    tt.address,
 				id:        0,

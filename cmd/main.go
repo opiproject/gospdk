@@ -22,7 +22,7 @@ func main() {
 	flag.Parse()
 
 	// use like this:
-	jsonRPC := spdk.NewSpdkJSONRPC(spdkAddress)
+	jsonRPC := spdk.NewClient(spdkAddress)
 	version := jsonRPC.GetVersion(ctx)
 	log.Printf("Received from SPDK: %v", version)
 

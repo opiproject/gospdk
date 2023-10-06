@@ -35,20 +35,20 @@ type JSONRPC interface {
 	Call(ctx context.Context, method string, args, result interface{}) error
 }
 
-// SpdkJSONRPC implements JSONRPC interface
-type SpdkJSONRPC struct {
+// Client implements JSONRPC interface
+type Client struct {
 	transport string
 	socket    string
 	id        uint64
 }
 
 // build time check that struct implements interface
-var _ JSONRPC = (*SpdkJSONRPC)(nil)
+var _ JSONRPC = (*Client)(nil)
 
-// NewSpdkJSONRPC creates a new instance of JSONRPC which is capable to
+// NewClient creates a new instance of JSONRPC which is capable to
 // interact with either unix domain socket, e.g.: /var/tmp/spdk.sock
 // or with tcp connection ip and port tuple, e.g.: 10.1.1.2:1234
-func NewSpdkJSONRPC(socketPath string) JSONRPC {
+func NewClient(socketPath string) *Client {
 	if socketPath == "" {
 		log.Panic("empty socketPath is not allowed")
 	}
@@ -57,7 +57,7 @@ func NewSpdkJSONRPC(socketPath string) JSONRPC {
 		protocol = "unix"
 	}
 	log.Printf("Connection to SPDK will be via: %s detected from %s", protocol, socketPath)
-	return &SpdkJSONRPC{
+	return &Client{
 		transport: protocol,
 		socket:    socketPath,
 		id:        0,
@@ -65,12 +65,12 @@ func NewSpdkJSONRPC(socketPath string) JSONRPC {
 }
 
 // GetID implements low level rpc request/response handling
-func (r *SpdkJSONRPC) GetID() uint64 {
+func (r *Client) GetID() uint64 {
 	return r.id
 }
 
 // GetVersion implements low level rpc request/response handling
-func (r *SpdkJSONRPC) GetVersion(ctx context.Context) string {
+func (r *Client) GetVersion(ctx context.Context) string {
 	var ver GetVersionResult
 	err := r.Call(ctx, "spdk_get_version", nil, &ver)
 	if err != nil {
@@ -83,7 +83,7 @@ func (r *SpdkJSONRPC) GetVersion(ctx context.Context) string {
 }
 
 // StartUnixListener is utility function used to create new listener in tests
-func (r *SpdkJSONRPC) StartUnixListener() net.Listener {
+func (r *Client) StartUnixListener() net.Listener {
 	if err := os.RemoveAll(r.socket); err != nil {
 		log.Fatal(err)
 	}
@@ -95,7 +95,7 @@ func (r *SpdkJSONRPC) StartUnixListener() net.Listener {
 }
 
 // Call implements low level rpc request/response handling
-func (r *SpdkJSONRPC) Call(_ context.Context, method string, args, result interface{}) error {
+func (r *Client) Call(_ context.Context, method string, args, result interface{}) error {
 	id := atomic.AddUint64(&r.id, 1)
 	request := RPCRequest{
 		RPCVersion: JSONRPCVersion,
@@ -132,7 +132,7 @@ func (r *SpdkJSONRPC) Call(_ context.Context, method string, args, result interf
 	return nil
 }
 
-func (r *SpdkJSONRPC) communicate(buf []byte) (io.Reader, error) {
+func (r *Client) communicate(buf []byte) (io.Reader, error) {
 	// connect
 	conn, err := net.Dial(r.transport, r.socket)
 	if err != nil {
