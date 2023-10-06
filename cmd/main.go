@@ -7,6 +7,7 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"log"
 
@@ -14,18 +15,20 @@ import (
 )
 
 func main() {
+	ctx := context.Background()
+
 	var spdkAddress string
 	flag.StringVar(&spdkAddress, "spdk_addr", "/var/tmp/spdk.sock", "Points to SPDK unix socket/tcp socket to interact with")
 	flag.Parse()
 
 	// use like this:
 	jsonRPC := spdk.NewSpdkJSONRPC(spdkAddress)
-	version := jsonRPC.GetVersion()
+	version := jsonRPC.GetVersion(ctx)
 	log.Printf("Received from SPDK: %v", version)
 
 	// or like this:
 	var ver spdk.GetVersionResult
-	err := jsonRPC.Call("spdk_get_version", nil, &ver)
+	err := jsonRPC.Call(ctx, "spdk_get_version", nil, &ver)
 	if err != nil {
 		log.Fatalf("failed to get SPDK version: %v", err)
 	}

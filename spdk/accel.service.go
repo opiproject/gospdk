@@ -4,9 +4,13 @@
 // Package spdk implements the spdk json-rpc protocol
 package spdk
 
+import (
+	"context"
+)
+
 type AccelService interface {
-	CryptoKeyCreate(name string, cipher string, key []byte) (*AccelCryptoKeyCreateResult, error)
-	CryptoKeyDestroy(*AccelCryptoKeyDestroyParams) (*AccelCryptoKeyDestroyResult, error)
-	CryptoKeyList(*AccelCryptoKeyGetParams) (*AccelCryptoKeyGetResult, error)
-	GetStats(*NvmfCreateSubsystemParams) (*NvmfCreateSubsystemResult, error)
+	CryptoKeyCreate(ctx context.Context, name string, cipher string, key []byte) (*AccelCryptoKeyCreateResult, error)
+	CryptoKeyDestroy(context.Context, *AccelCryptoKeyDestroyParams) (*AccelCryptoKeyDestroyResult, error)
+	CryptoKeyList(context.Context, *AccelCryptoKeyGetParams) (*AccelCryptoKeyGetResult, error)
+	GetStats(context.Context, *NvmfCreateSubsystemParams) (*NvmfCreateSubsystemResult, error)
 }

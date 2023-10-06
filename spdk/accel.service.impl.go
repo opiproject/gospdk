@@ -12,16 +12,15 @@ import (
 )
 
 type AccelServiceImpl struct {
-	ctx    context.Context
 	client JSONRPC
 }
 
-func NewAccelService(ctx context.Context) AccelService {
+func NewAccelService() AccelService {
 	// client := spdk.NewSpdkJSONRPC(spdkAddress)
-	return &AccelServiceImpl{ctx, nil}
+	return &AccelServiceImpl{nil}
 }
 
-func (p *AccelServiceImpl) CryptoKeyCreate(name string, cipher string, key []byte) (*AccelCryptoKeyCreateResult, error) {
+func (p *AccelServiceImpl) CryptoKeyCreate(ctx context.Context, name string, cipher string, key []byte) (*AccelCryptoKeyCreateResult, error) {
 	// TBD
 	keyHalf := len(key) / 2
 	params := AccelCryptoKeyCreateParams{
@@ -31,7 +30,7 @@ func (p *AccelServiceImpl) CryptoKeyCreate(name string, cipher string, key []byt
 		Name:   name,
 	}
 	var result AccelCryptoKeyCreateResult
-	err := p.client.Call("accel_crypto_key_create", &params, &result)
+	err := p.client.Call(ctx, "accel_crypto_key_create", &params, &result)
 	if err != nil {
 		log.Printf("error: %v", err)
 		return nil, err
@@ -45,17 +44,17 @@ func (p *AccelServiceImpl) CryptoKeyCreate(name string, cipher string, key []byt
 	return nil, nil
 }
 
-func (p *AccelServiceImpl) CryptoKeyDestroy(params *AccelCryptoKeyDestroyParams) (*AccelCryptoKeyDestroyResult, error) {
+func (p *AccelServiceImpl) CryptoKeyDestroy(_ context.Context, params *AccelCryptoKeyDestroyParams) (*AccelCryptoKeyDestroyResult, error) {
 	// TBD
 	return nil, nil
 }
 
-func (p *AccelServiceImpl) CryptoKeyList(params *AccelCryptoKeyGetParams) (*AccelCryptoKeyGetResult, error) {
+func (p *AccelServiceImpl) CryptoKeyList(_ context.Context, params *AccelCryptoKeyGetParams) (*AccelCryptoKeyGetResult, error) {
 	// TBD
 	return nil, nil
 }
 
-func (p *AccelServiceImpl) GetStats(params *NvmfCreateSubsystemParams) (*NvmfCreateSubsystemResult, error) {
+func (p *AccelServiceImpl) GetStats(_ context.Context, params *NvmfCreateSubsystemParams) (*NvmfCreateSubsystemResult, error) {
 	// TBD
 	return nil, nil
 }

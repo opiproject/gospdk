@@ -7,6 +7,7 @@ package spdk
 
 import (
 	"bufio"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -29,9 +30,9 @@ var (
 // JSONRPC represents an interface to execute JSON RPC to SPDK
 type JSONRPC interface {
 	GetID() uint64
-	GetVersion() string
+	GetVersion(context.Context) string
 	StartUnixListener() net.Listener
-	Call(method string, args, result interface{}) error
+	Call(ctx context.Context, method string, args, result interface{}) error
 }
 
 type SpdkJSONRPC struct {
@@ -39,6 +40,9 @@ type SpdkJSONRPC struct {
 	socket    string
 	id        uint64
 }
+
+// build time check that struct implements interface
+var _ JSONRPC = (*SpdkJSONRPC)(nil)
 
 // NewSpdkJSONRPC creates a new instance of JSONRPC which is capable to
 // interact with either unix domain socket, e.g.: /var/tmp/spdk.sock
@@ -65,9 +69,9 @@ func (r *SpdkJSONRPC) GetID() uint64 {
 }
 
 // GetVersion implements low level rpc request/response handling
-func (r *SpdkJSONRPC) GetVersion() string {
+func (r *SpdkJSONRPC) GetVersion(ctx context.Context) string {
 	var ver GetVersionResult
-	err := r.Call("spdk_get_version", nil, &ver)
+	err := r.Call(ctx, "spdk_get_version", nil, &ver)
 	if err != nil {
 		msg := fmt.Sprintf("Could not get spdk version: %v", err)
 		log.Print(msg)
@@ -90,7 +94,7 @@ func (r *SpdkJSONRPC) StartUnixListener() net.Listener {
 }
 
 // Call implements low level rpc request/response handling
-func (r *SpdkJSONRPC) Call(method string, args, result interface{}) error {
+func (r *SpdkJSONRPC) Call(_ context.Context, method string, args, result interface{}) error {
 	id := atomic.AddUint64(&r.id, 1)
 	request := RPCRequest{
 		RPCVersion: JSONRPCVersion,
