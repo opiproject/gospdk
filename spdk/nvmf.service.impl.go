@@ -20,7 +20,7 @@ var _ NvmfService = (*NvmfServiceImpl)(nil)
 
 // NewNvmfService is a constructor for NvmfServiceImpl
 func NewNvmfService() *NvmfServiceImpl {
-	// client := spdk.NewSpdkJSONRPC(spdkAddress)
+	// client := spdk.NewClient(spdkAddress)
 	return &NvmfServiceImpl{nil}
 }
 

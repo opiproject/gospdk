@@ -21,7 +21,7 @@ var _ AccelService = (*AccelServiceImpl)(nil)
 
 // NewAccelService is a constructor for AccelServiceImpl
 func NewAccelService() *AccelServiceImpl {
-	// client := spdk.NewSpdkJSONRPC(spdkAddress)
+	// client := spdk.NewClient(spdkAddress)
 	return &AccelServiceImpl{nil}
 }
 
