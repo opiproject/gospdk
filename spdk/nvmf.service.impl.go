@@ -11,16 +11,15 @@ import (
 )
 
 type NvmfServiceImpl struct {
-	ctx    context.Context
 	client JSONRPC
 }
 
-func NewNvmfService(ctx context.Context) NvmfService {
+func NewNvmfService() NvmfService {
 	// client := spdk.NewSpdkJSONRPC(spdkAddress)
-	return &NvmfServiceImpl{ctx, nil}
+	return &NvmfServiceImpl{nil}
 }
 
-func (p *NvmfServiceImpl) CreateSubsystem(nqn string, serial string, model string, ns int) (*NvmfCreateSubsystemResult, error) {
+func (p *NvmfServiceImpl) CreateSubsystem(ctx context.Context, nqn string, serial string, model string, ns int) (*NvmfCreateSubsystemResult, error) {
 	// TBD
 	params := NvmfCreateSubsystemParams{
 		Nqn:           nqn,
@@ -30,7 +29,7 @@ func (p *NvmfServiceImpl) CreateSubsystem(nqn string, serial string, model strin
 		MaxNamespaces: ns,
 	}
 	var result NvmfCreateSubsystemResult
-	err := p.client.Call("nvmf_create_subsystem", &params, &result)
+	err := p.client.Call(ctx, "nvmf_create_subsystem", &params, &result)
 	if err != nil {
 		log.Printf("error: %v", err)
 		return nil, err
@@ -44,37 +43,37 @@ func (p *NvmfServiceImpl) CreateSubsystem(nqn string, serial string, model strin
 	return nil, nil
 }
 
-func (p *NvmfServiceImpl) DeleteSubsystem(*NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error) {
+func (p *NvmfServiceImpl) DeleteSubsystem(context.Context, *NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error) {
 	// TBD
 	return nil, nil
 }
 
-func (p *NvmfServiceImpl) GetSubsystems(page int, limit int) (*NvmfGetSubsystemsResult, error) {
+func (p *NvmfServiceImpl) GetSubsystems(_ context.Context, page int, limit int) (*NvmfGetSubsystemsResult, error) {
 	// TBD
 	return nil, nil
 }
 
-func (p *NvmfServiceImpl) GetStats(page int, limit int) (*NvmfGetSubsystemStatsResult, error) {
+func (p *NvmfServiceImpl) GetStats(_ context.Context, page int, limit int) (*NvmfGetSubsystemStatsResult, error) {
 	// TBD
 	return nil, nil
 }
 
-func (p *NvmfServiceImpl) AddListener(*NvmfSubsystemAddListenerParams) (*NvmfSubsystemAddListenerResult, error) {
+func (p *NvmfServiceImpl) AddListener(context.Context, *NvmfSubsystemAddListenerParams) (*NvmfSubsystemAddListenerResult, error) {
 	// TBD
 	return nil, nil
 }
 
-func (p *NvmfServiceImpl) RemoveListener(*NvmfSubsystemAddListenerParams) (*NvmfSubsystemAddListenerResult, error) {
+func (p *NvmfServiceImpl) RemoveListener(context.Context, *NvmfSubsystemAddListenerParams) (*NvmfSubsystemAddListenerResult, error) {
 	// TBD
 	return nil, nil
 }
 
-func (p *NvmfServiceImpl) AddNamespace(*NvmfSubsystemAddNsParams) (*NvmfSubsystemAddNsResult, error) {
+func (p *NvmfServiceImpl) AddNamespace(context.Context, *NvmfSubsystemAddNsParams) (*NvmfSubsystemAddNsResult, error) {
 	// TBD
 	return nil, nil
 }
 
-func (p *NvmfServiceImpl) RemoveNamespace(*NvmfSubsystemRemoveNsParams) (*NvmfSubsystemRemoveNsResult, error) {
+func (p *NvmfServiceImpl) RemoveNamespace(context.Context, *NvmfSubsystemRemoveNsParams) (*NvmfSubsystemRemoveNsResult, error) {
 	// TBD
 	return nil, nil
 }

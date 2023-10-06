@@ -4,17 +4,21 @@
 // Package spdk implements the spdk json-rpc protocol
 package spdk
 
-type LvolService interface {
-	CreateLvstore(*NvmfCreateSubsystemParams) (*NvmfCreateSubsystemResult, error)
-	DeleteLvstore(*NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error)
-	GetLvstores(page int, limit int) (*NvmfGetSubsystemsResult, error)
-	RenameLvstore(*NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error)
-	GrowLvstore(*NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error)
+import (
+	"context"
+)
 
-	CreateLvol(*NvmfCreateSubsystemParams) (*NvmfCreateSubsystemResult, error)
-	SnapshotLvol(*NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error)
-	CloneLvol(*NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error)
-	RenameLvol(*NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error)
-	ResizeLvol(*NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error)
-	DeleteLvol(*NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error)
+type LvolService interface {
+	CreateLvstore(context.Context, *NvmfCreateSubsystemParams) (*NvmfCreateSubsystemResult, error)
+	DeleteLvstore(context.Context, *NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error)
+	GetLvstores(ctx context.Context, page int, limit int) (*NvmfGetSubsystemsResult, error)
+	RenameLvstore(context.Context, *NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error)
+	GrowLvstore(context.Context, *NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error)
+
+	CreateLvol(context.Context, *NvmfCreateSubsystemParams) (*NvmfCreateSubsystemResult, error)
+	SnapshotLvol(context.Context, *NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error)
+	CloneLvol(context.Context, *NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error)
+	RenameLvol(context.Context, *NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error)
+	ResizeLvol(context.Context, *NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error)
+	DeleteLvol(context.Context, *NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error)
 }
