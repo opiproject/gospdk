@@ -35,6 +35,7 @@ type JSONRPC interface {
 	Call(ctx context.Context, method string, args, result interface{}) error
 }
 
+// SpdkJSONRPC implements JSONRPC interface
 type SpdkJSONRPC struct {
 	transport string
 	socket    string

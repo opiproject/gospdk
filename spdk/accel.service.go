@@ -8,6 +8,7 @@ import (
 	"context"
 )
 
+// AccelService is interface to all acceleration functions in spdk
 type AccelService interface {
 	CryptoKeyCreate(ctx context.Context, name string, cipher string, key []byte) (*AccelCryptoKeyCreateResult, error)
 	CryptoKeyDestroy(context.Context, *AccelCryptoKeyDestroyParams) (*AccelCryptoKeyDestroyResult, error)

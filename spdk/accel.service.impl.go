@@ -11,15 +11,21 @@ import (
 	"log"
 )
 
+// AccelServiceImpl implements AccelService interface
 type AccelServiceImpl struct {
 	client JSONRPC
 }
 
-func NewAccelService() AccelService {
+// build time check that struct implements interface
+var _ AccelService = (*AccelServiceImpl)(nil)
+
+// NewAccelService is a constructor for AccelServiceImpl
+func NewAccelService() *AccelServiceImpl {
 	// client := spdk.NewSpdkJSONRPC(spdkAddress)
 	return &AccelServiceImpl{nil}
 }
 
+// CryptoKeyCreate creates crypto key
 func (p *AccelServiceImpl) CryptoKeyCreate(ctx context.Context, name string, cipher string, key []byte) (*AccelCryptoKeyCreateResult, error) {
 	// TBD
 	keyHalf := len(key) / 2
@@ -44,17 +50,20 @@ func (p *AccelServiceImpl) CryptoKeyCreate(ctx context.Context, name string, cip
 	return nil, nil
 }
 
-func (p *AccelServiceImpl) CryptoKeyDestroy(_ context.Context, params *AccelCryptoKeyDestroyParams) (*AccelCryptoKeyDestroyResult, error) {
+// CryptoKeyDestroy destroys crypto key
+func (p *AccelServiceImpl) CryptoKeyDestroy(_ context.Context, _ *AccelCryptoKeyDestroyParams) (*AccelCryptoKeyDestroyResult, error) {
 	// TBD
 	return nil, nil
 }
 
-func (p *AccelServiceImpl) CryptoKeyList(_ context.Context, params *AccelCryptoKeyGetParams) (*AccelCryptoKeyGetResult, error) {
+// CryptoKeyList lists crypto keys
+func (p *AccelServiceImpl) CryptoKeyList(_ context.Context, _ *AccelCryptoKeyGetParams) (*AccelCryptoKeyGetResult, error) {
 	// TBD
 	return nil, nil
 }
 
-func (p *AccelServiceImpl) GetStats(_ context.Context, params *NvmfCreateSubsystemParams) (*NvmfCreateSubsystemResult, error) {
+// GetStats gets crypto key stats
+func (p *AccelServiceImpl) GetStats(_ context.Context, _ *NvmfCreateSubsystemParams) (*NvmfCreateSubsystemResult, error) {
 	// TBD
 	return nil, nil
 }

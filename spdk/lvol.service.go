@@ -8,6 +8,7 @@ import (
 	"context"
 )
 
+// LvolService is interface to all logical volumes functions in spdk
 type LvolService interface {
 	CreateLvstore(context.Context, *NvmfCreateSubsystemParams) (*NvmfCreateSubsystemResult, error)
 	DeleteLvstore(context.Context, *NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error)
