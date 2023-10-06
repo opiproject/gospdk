@@ -8,6 +8,7 @@ import (
 	"context"
 )
 
+// NvmfService is interface to all nvme over fabric functions in spdk
 type NvmfService interface {
 	CreateSubsystem(ctx context.Context, nqn string, serial string, model string, ns int) (*NvmfCreateSubsystemResult, error)
 	DeleteSubsystem(context.Context, *NvmfDeleteSubsystemParams) (*NvmfDeleteSubsystemResult, error)
