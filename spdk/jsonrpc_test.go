@@ -7,6 +7,8 @@ package spdk
 import (
 	"reflect"
 	"testing"
+
+	"go.opentelemetry.io/otel"
 )
 
 func TestSpdk_NewClient(t *testing.T) {
@@ -51,6 +53,7 @@ func TestSpdk_NewClient(t *testing.T) {
 				transport: tt.transport,
 				socket:    tt.address,
 				id:        0,
+				tracer:    otel.Tracer(""),
 			}
 			if !reflect.DeepEqual(before, after) {
 				t.Error("response: expected", after, "received", before)

@@ -18,6 +18,10 @@ import (
 
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/attribute"
+	"go.opentelemetry.io/otel/trace"
 )
 
 var (
@@ -40,6 +44,7 @@ type Client struct {
 	transport string
 	socket    string
 	id        uint64
+	tracer    trace.Tracer
 }
 
 // build time check that struct implements interface
@@ -61,6 +66,7 @@ func NewClient(socketPath string) *Client {
 		transport: protocol,
 		socket:    socketPath,
 		id:        0,
+		tracer:    otel.Tracer(""),
 	}
 }
 
@@ -95,8 +101,13 @@ func (r *Client) StartUnixListener() net.Listener {
 }
 
 // Call implements low level rpc request/response handling
-func (r *Client) Call(_ context.Context, method string, args, result interface{}) error {
+func (r *Client) Call(ctx context.Context, method string, args, result interface{}) error {
 	id := atomic.AddUint64(&r.id, 1)
+
+	_, childSpan := r.tracer.Start(ctx, "spdk."+method)
+	childSpan.SetAttributes(attribute.Int64("request.id", int64(id)))
+	defer childSpan.End()
+
 	request := RPCRequest{
 		RPCVersion: JSONRPCVersion,
 		ID:         id,
