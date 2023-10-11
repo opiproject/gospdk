@@ -105,8 +105,15 @@ func (r *Client) Call(ctx context.Context, method string, args, result interface
 	id := atomic.AddUint64(&r.id, 1)
 
 	_, childSpan := r.tracer.Start(ctx, "spdk."+method)
-	childSpan.SetAttributes(attribute.Int64("request.id", int64(id)))
 	defer childSpan.End()
+
+	if childSpan.IsRecording() {
+		childSpan.SetAttributes(
+			attribute.Int64("request.id", int64(id)),
+			attribute.String("spdk.socket", r.socket),
+			attribute.String("spdk.transport", r.transport),
+		)
+	}
 
 	request := RPCRequest{
 		RPCVersion: JSONRPCVersion,
