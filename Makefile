@@ -29,4 +29,4 @@ mock-generate:
 	mockery --config=mocks/.mockery.yaml --name=InvClient --dir=inventory
 
 	# Generate mocks for imported protobuf clients too
-	mockery --config=mocks/.mockery.yaml --name=InventorySvcClient --srcpkg=github.com/opiproject/opi-api/common/v1/gen/go
+	mockery --config=mocks/.mockery.yaml --name=InventorySvcClient --srcpkg=github.com/opiproject/opi-api/inventory/v1/gen/go
