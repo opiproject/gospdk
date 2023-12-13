@@ -5,12 +5,29 @@
 // Package spdk implements the spdk json-rpc protocol
 package spdk
 
+const (
+	// TweakModeSimpleLba represents tweak as
+	// Tweak[127:0] = {64'b0, LBA[63:0]}
+	// It is the default tweak mode if not specified
+	TweakModeSimpleLba = "SIMPLE_LBA"
+	// TweakModeJoinNegLbaWithLba represents tweak as
+	// Tweak[127:0] = {1’b0, ~LBA[62:0], LBA[63:0]}
+	TweakModeJoinNegLbaWithLba = "JOIN_NEG_LBA_WITH_LBA"
+	// TweakModeIncr512FullLba represents tweak as
+	// Tweak[127:0] = {lba[127:0]}
+	TweakModeIncr512FullLba = "INCR_512_FULL_LBA"
+	// TweakModeIncr512UpperLba represents tweak as
+	// Tweak[127:0] = {lba[63:0], 64'b0}
+	TweakModeIncr512UpperLba = "INCR_512_UPPER_LBA"
+)
+
 // AccelCryptoKeyCreateParams holds the parameters required to create a Crypto Key
 type AccelCryptoKeyCreateParams struct {
-	Cipher string `json:"cipher"`
-	Key    string `json:"key"`
-	Key2   string `json:"key2"`
-	Name   string `json:"name"`
+	Cipher    string `json:"cipher"`
+	Key       string `json:"key"`
+	Key2      string `json:"key2"`
+	TweakMode string `json:"tweak_mode,omitempty"`
+	Name      string `json:"name"`
 }
 
 // AccelCryptoKeyCreateResult is the result of creating a Crypto Key
