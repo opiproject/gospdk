@@ -83,16 +83,18 @@ type BdevAioDeleteParams struct {
 // BdevAioDeleteResult is the result of deleting an AIO Block Device
 type BdevAioDeleteResult bool
 
-// BdevMalloCreateParams holds the parameters required to create a Malloc Block Device
-type BdevMalloCreateParams struct {
-	NumBlocks int    `json:"num_blocks"`
-	BlockSize int    `json:"block_size"`
-	Name      string `json:"name"`
-	UUID      string `json:"uuid"`
+// BdevMallocCreateParams holds the parameters required to create a Malloc Block Device
+type BdevMallocCreateParams struct {
+	NumBlocks    int    `json:"num_blocks"`
+	BlockSize    int    `json:"block_size"`
+	MdSize       int    `json:"md_size,omitempty"`
+	MdInterleave bool   `json:"md_interleave,omitempty"`
+	Name         string `json:"name"`
+	UUID         string `json:"uuid,omitempty"`
 }
 
-// BdevAMalloCreateResult is the result of creating a Malloc Block Device
-type BdevAMalloCreateResult string
+// BdevMallocCreateResult is the result of creating a Malloc Block Device
+type BdevMallocCreateResult string
 
 // BdevMallocDeleteParams holds the parameters required to delete a Malloc Block Device
 type BdevMallocDeleteParams struct {
