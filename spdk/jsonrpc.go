@@ -131,7 +131,10 @@ func (r *Client) Call(ctx context.Context, method string, args, result interface
 
 	log.Printf("Sending to SPDK: %s", data)
 
-	resp := r.communicate(data)
+	resp, err := r.communicate(data)
+	if err != nil {
+		return fmt.Errorf("%s: %s", method, err)
+	}
 
 	var response RPCResponse
 	err = json.NewDecoder(resp).Decode(&response)
@@ -153,17 +156,17 @@ func (r *Client) Call(ctx context.Context, method string, args, result interface
 	return nil
 }
 
-func (r *Client) communicate(buf []byte) io.Reader {
+func (r *Client) communicate(buf []byte) (io.Reader, error) {
 	// connect
 	conn, err := net.Dial(r.transport, r.socket)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 	// write
 	_, err = conn.Write(buf)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 	// read
-	return bufio.NewReader(conn)
+	return bufio.NewReader(conn), nil
 }
